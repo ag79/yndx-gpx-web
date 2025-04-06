@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yandex Route to GPX Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Яндекс карты ⇒ GPX</h1>
+        <form id="converterForm">
+            <div class="form-group">
+                <label for="url">URL пользовательской карты с маршрутом</label>
+                <input type="text" id="url" name="url" placeholder="https://yandex.ru/maps/... адрес пользовательской карты" required>
+            </div>
+
+            <div class="form-group">
+                <label>Преобразовать линии в</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="lines" value="tracks" checked> Треки</label>
+                    <label><input type="radio" name="lines" value="routes"> Маршруты</label>
+                    <label><input type="radio" name="lines" value="track_segments"> Один трек</label>
+                </div>
+                <p class="description">
+                    <ul class="description">
+                        <li>Треки: каждый отрезок будет отдельным треком. Некоторые устройства поддерживают навигацию по треку.</li>
+                        <li>Маршруты: каждый отрезок будет отдельным маршрутом (route или course в Garmin). Подходит для навигации с устройствами Garmin.</li>
+                        <li>Один трек: отрезки будут сегментами в треке, названия будут потеряны.</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label><input type="checkbox" id="placemarks" name="placemarks" checked> Включить путевые точки в GPX</label>
+            </div>
+
+            <div class="form-group">
+                <label><input type="checkbox" id="add_elevation" name="add_elevation"> Добавить высоты из SRTM</label>
+                <p class="description">Полезно для аналитики, в навигации большинством устройств не используются.
+                    Увеличивает размер файла.</p>
+            </div>
+
+            <button type="submit">Конвертировать и скачать GPX</button>
+        </form>
+        <div id="error" class="error"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
