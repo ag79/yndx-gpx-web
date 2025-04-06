@@ -34,9 +34,25 @@ document.getElementById('converterForm').addEventListener('submit', async functi
             // Handle file download
             const blob = await response.blob();
             const contentDisposition = response.headers.get('Content-Disposition');
-            const filename = contentDisposition
-                ? contentDisposition.split('filename=')[1].replace(/"/g, '')
-                : 'track.gpx';
+
+            let filename = 'track.gpx'; // Default
+
+            if (contentDisposition) {
+                // Try RFC 5987 format: filename*=UTF-8''...
+                const utf8Match = contentDisposition.match(/filename\*=UTF-8''([^;]+)/);
+                if (utf8Match && utf8Match[1]) {
+                    filename = decodeURIComponent(utf8Match[1]); // Decode URL-encoded UTF-8
+                } else {
+                    // Fallback to basic filename="..."
+                    const basicMatch = contentDisposition.match(/filename="([^"]+)"/);
+                    if (basicMatch && basicMatch[1]) {
+                        filename = basicMatch[1];
+                    }
+                }
+            }
+            // const filename = contentDisposition
+            //     ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+            //     : 'track.gpx';
 
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
