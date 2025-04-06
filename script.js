@@ -1,7 +1,6 @@
 document.getElementById('converterForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // Collect form values
     const url = document.getElementById('url').value;
     const addElevation = document.getElementById('add_elevation').checked ? 1 : 0;
     const lines = document.querySelector('input[name="lines"]:checked').value;
@@ -9,14 +8,12 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
     const errorDiv = document.getElementById('error');
 
-    // Validate URL
     if (!url.startsWith('https://yandex.ru/maps/')) {
         errorDiv.textContent = 'URL должен начинаться с https://yandex.ru/maps/';
         errorDiv.style.display = 'block';
-        return; // Stop execution if validation fails
+        return;
     }
 
-    // Construct the query string
     const queryParams = new URLSearchParams({
         url: url,
         add_elevation: addElevation,
@@ -24,24 +21,25 @@ document.getElementById('converterForm').addEventListener('submit', async functi
         placemarks: placemarks
     }).toString();
 
-    // Replace with your Yandex Cloud Function URL
     const functionUrl = `https://functions.yandexcloud.net/d4ea9k4gss3q5ge37s23?${queryParams}`;
 
     try {
         const response = await fetch(functionUrl);
 
         if (response.ok) {
-            // Handle file download
             const blob = await response.blob();
             const contentDisposition = response.headers.get('Content-Disposition');
-
             let filename = 'track.gpx'; // Default
 
             if (contentDisposition) {
-                // Try RFC 5987 format: filename*=UTF-8''...
-                const utf8Match = contentDisposition.match(/filename\*=UTF-8''([^;]+)/);
+                // Match filename*=UTF-8''<anything> until end or invalid char
+                const utf8Match = contentDisposition.match(/filename\*=UTF-8''(.*)$/);
                 if (utf8Match && utf8Match[1]) {
-                    filename = decodeURIComponent(utf8Match[1]); // Decode URL-encoded UTF-8
+                    try {
+                        filename = decodeURIComponent(utf8Match[1]);
+                    } catch (e) {
+                        console.error('Failed to decode filename:', e);
+                    }
                 } else {
                     // Fallback to basic filename="..."
                     const basicMatch = contentDisposition.match(/filename="([^"]+)"/);
@@ -50,9 +48,6 @@ document.getElementById('converterForm').addEventListener('submit', async functi
                     }
                 }
             }
-            // const filename = contentDisposition
-            //     ? contentDisposition.split('filename=')[1].replace(/"/g, '')
-            //     : 'track.gpx';
 
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
@@ -61,9 +56,8 @@ document.getElementById('converterForm').addEventListener('submit', async functi
             link.click();
             document.body.removeChild(link);
 
-            errorDiv.style.display = 'none'; // Hide error if successful
+            errorDiv.style.display = 'none';
         } else {
-            // Display error
             const errorText = await response.text();
             errorDiv.textContent = `Error ${response.status}: ${errorText}`;
             errorDiv.style.display = 'block';
