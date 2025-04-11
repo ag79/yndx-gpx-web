@@ -88,8 +88,21 @@ button:hover {
     margin-top: 5px;
 }
 
+/* New class for <ul> */
+.description-list {
+    font-size: 0.9em;
+    color: #777;
+    margin: 0;
+    padding-left: 20px; /* Matches typical text alignment */
+    list-style-type: disc; /* Optional: keeps bullet points */
+}
+
 /* Mobile responsiveness */
 @media (max-width: 500px) {
+    body {
+        font-size: 18px; /* Larger base font size for mobile */
+    }
+
     .container {
         margin: 10px;
         padding: 15px;
@@ -100,7 +113,16 @@ button:hover {
         gap: 10px;
     }
 
-    button {
-        font-size: 14px;
+    .description {
+        font-size: 0.95em; /* Slightly larger than desktop for readability */
     }
+
+    .description-list {
+        padding-left: 25px; /* Slightly more indent on mobile for clarity */
+    }
+
+    button {
+        font-size: 16px; /* Adjusted for mobile */
+    }
+    
 }
