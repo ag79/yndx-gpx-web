@@ -97,6 +97,10 @@ button:hover {
     list-style-type: disc; /* Optional: keeps bullet points */
 }
 
+input[type="text"], textarea {
+    background-color : #f3f7c9; 
+  }
+
 /* Mobile responsiveness */
 @media (max-width: 500px) {
     body {
