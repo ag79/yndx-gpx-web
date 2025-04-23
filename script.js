@@ -9,7 +9,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
     const errorDiv = document.getElementById('error');
 
     if (!url.includes('yandex.ru/maps/')) {
-        errorDiv.textContent = 'URL должен начинаться с https://yandex.ru/maps/';
+        errorDiv.textContent = 'Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...';
         errorDiv.style.display = 'block';
         return;
     }
