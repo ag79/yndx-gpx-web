@@ -8,7 +8,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
     const errorDiv = document.getElementById('error');
 
-    if (!url.startsWith('https://yandex.ru/maps/')) {
+    if (!url.includes('yandex.ru/maps/')) {
         errorDiv.textContent = 'URL должен начинаться с https://yandex.ru/maps/';
         errorDiv.style.display = 'block';
         return;
