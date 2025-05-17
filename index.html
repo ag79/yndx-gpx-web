@@ -27,10 +27,14 @@
         <h1>Яндекс карты ⇒ GPX</h1>
         <form id="converterForm">
             <div class="form-group">
-                <label for="url">URL пользовательской карты с маршрутом</label>
+                <label for="url">URL карты с маршрутом</label>
                 <input type="text" id="url" name="url" placeholder="https://yandex.ru/maps/... адрес пользовательской карты" required>
-                <p class="description"><span style="color: red">&#9888;</span> Пока поддерживаются только карты, созданные в <a href="https://yandex.ru/map-constructor/">Конструкторе карт Яндекса</a>.
-                    Не поддерживаются проложенные Яндексом маршруты навигации откуда-куда и созданные линейкой отрезки на обычной карте.</p>
+                <p class="description">Поддерживаются:</p>
+                    <ul class="description-list">
+                        <li>пользовательские карты, созданные в <a href="https://yandex.ru/map-constructor/">Конструкторе карт</a> Яндекса.</li>
+                        <li>проложенные Яндексом маршруты навигации (в gpx сохраняются все варианты маршрута!)</li>
+                    </ul>
+                <p class="description">Не поддерживаются созданные линейкой отрезки на обычной карте.</p>
             </div>
 
             <div class="form-group">
