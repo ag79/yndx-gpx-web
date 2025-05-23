@@ -6,7 +6,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
     const lines = document.querySelector('input[name="lines"]:checked').value;
     const placemarks = document.getElementById('placemarks').checked ? 1 : 0;
 
-    const errorDiv = document.getElementById('error');
+    const errorDiv = document.getElementById('output');
 
     if (!url.includes('yandex.ru/maps/')) {
         errorDiv.textContent = 'Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...';
@@ -29,10 +29,9 @@ document.getElementById('converterForm').addEventListener('submit', async functi
         if (response.ok) {
             const blob = await response.blob();
             const contentDisposition = response.headers.get('Content-Disposition');
-            let filename = 'track.gpx'; // Default
+            let filename = 'track.gpx';
 
             if (contentDisposition) {
-                // Match filename*=UTF-8''<anything> until end or invalid char
                 const utf8Match = contentDisposition.match(/filename\*=UTF-8''(.*)$/);
                 if (utf8Match && utf8Match[1]) {
                     try {
@@ -41,11 +40,24 @@ document.getElementById('converterForm').addEventListener('submit', async functi
                         console.error('Failed to decode filename:', e);
                     }
                 } else {
-                    // Fallback to basic filename="..."
                     const basicMatch = contentDisposition.match(/filename="([^"]+)"/);
                     if (basicMatch && basicMatch[1]) {
                         filename = basicMatch[1];
                     }
+                }
+            }
+
+            // Handle X-GPX-Info header with proper UTF-8 decoding
+            const gpxInfoHeader = response.headers.get('X-GPX-Info');
+            if (gpxInfoHeader) {
+                try {
+                    // Proper UTF-8 decoding from base64
+                    const decodedString = decodeBase64UTF8(gpxInfoHeader);
+                    errorDiv.className = 'result';
+                    errorDiv.textContent = decodedString;
+                    errorDiv.style.display = 'block';
+                } catch (e) {
+                    console.error('Failed to decode X-GPX-Info:', e);
                 }
             }
 
@@ -56,14 +68,28 @@ document.getElementById('converterForm').addEventListener('submit', async functi
             link.click();
             document.body.removeChild(link);
 
-            errorDiv.style.display = 'none';
         } else {
             const errorText = await response.text();
+            errorDiv.className = 'error';
             errorDiv.textContent = `Error ${response.status}: ${errorText}`;
             errorDiv.style.display = 'block';
         }
     } catch (err) {
+        errorDiv.className = 'error';
         errorDiv.textContent = `Request failed: ${err.message}`;
         errorDiv.style.display = 'block';
     }
 });
+
+// Helper function for proper UTF-8 base64 decoding
+function decodeBase64UTF8(str) {
+    // Convert base64 to binary string
+    const binaryString = atob(str);
+    // Convert binary string to byte array
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    // Decode UTF-8
+    return new TextDecoder('utf-8').decode(bytes);
+}

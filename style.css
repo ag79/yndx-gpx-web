@@ -82,6 +82,17 @@ button:hover {
     display: none;
 }
 
+.result {
+    white-space: pre-line;
+    margin-top: 20px;
+    padding: 10px;
+    color: #12087d;
+    background: #ddf8d7;
+    border: 1px solid #dff5c6;
+    border-radius: 4px;
+    display: none;
+}
+
 .description {
     font-size: 0.9em;
     color: #777;
