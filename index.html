@@ -40,14 +40,14 @@
             <div class="form-group">
                 <label>Преобразовать линии в</label>
                 <div class="radio-group">
-                    <label><input type="radio" name="lines" value="tracks" checked> Треки</label>
                     <label><input type="radio" name="lines" value="routes"> Маршруты</label>
+                    <label><input type="radio" name="lines" value="tracks" checked> Треки</label>
                     <label><input type="radio" name="lines" value="track_segments"> Один трек</label>
                 </div>
                 <p class="description">
                     <ul class="description-list">
+                        <li>Маршруты: каждый отрезок будет отдельным маршрутом ("дистанция" или "course" в Garmin). Подходит для навигации с устройствами Garmin и большинством других.</li>
                         <li>Треки: каждый отрезок будет отдельным треком. Некоторые устройства поддерживают навигацию по треку.</li>
-                        <li>Маршруты: каждый отрезок будет отдельным маршрутом ("дистанция" или "course" в Garmin). Подходит для навигации с устройствами Garmin.</li>
                         <li>Один трек: отрезки в исходном порядке будут склеены как сегменты в один трек с потерей названий.</li>
                     </ul>
                 </p>
@@ -59,7 +59,7 @@
 
             <div class="form-group">
                 <label><input type="checkbox" id="add_elevation" name="add_elevation"> Добавить высоты из SRTM</label>
-                <p class="description">Полезно для аналитики, в навигации большинством устройств не используются.
+                <p class="description">Для аналитики, в навигации большинством устройств не используются.
                     Увеличивает размер файла.</p>
             </div>
 
