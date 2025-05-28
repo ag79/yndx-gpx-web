@@ -8,6 +8,13 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
     const errorDiv = document.getElementById('output');
 
+    function displayMessage(message, isError = true) {
+        errorDiv.className = isError ? 'error' : 'result';
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     // Validate URL format
     try {
         const urlObj = new URL(url);
@@ -15,16 +22,14 @@ document.getElementById('converterForm').addEventListener('submit', async functi
             throw new Error('Invalid protocol');
         }
     } catch (e) {
-        errorDiv.textContent = 'Проверьте, что введен корректный адрес карты, \
+        displayMessage('Проверьте, что введен корректный адрес карты, \
         начинающийся с http:// или https://. Копируйте его из адресной строки браузера \
-        или пользуйтесь функцией "Поделиться".';
-        errorDiv.style.display = 'block';
+        или пользуйтесь функцией "Поделиться".');
         return;
     }
 
     if (!url.includes('yandex.ru/maps/')) {
-        errorDiv.textContent = 'Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...';
-        errorDiv.style.display = 'block';
+        displayMessage('Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...');
         return;
     }
 
@@ -65,11 +70,8 @@ document.getElementById('converterForm').addEventListener('submit', async functi
             const gpxInfoHeader = response.headers.get('X-GPX-Info');
             if (gpxInfoHeader) {
                 try {
-                    // Proper UTF-8 decoding from base64
                     const decodedString = decodeBase64UTF8(gpxInfoHeader);
-                    errorDiv.className = 'result';
-                    errorDiv.textContent = decodedString;
-                    errorDiv.style.display = 'block';
+                    displayMessage(decodedString, false);
                 } catch (e) {
                     console.error('Failed to decode X-GPX-Info:', e);
                 }
@@ -84,26 +86,15 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
         } else {
             const errorText = await response.text();
-            errorDiv.className = 'error';
-            errorDiv.textContent = `Error ${response.status}: ${errorText}`;
-            errorDiv.style.display = 'block';
+            displayMessage(`Error ${response.status}: ${errorText}`);
         }
     } catch (err) {
-        errorDiv.className = 'error';
-        errorDiv.textContent = `Request failed: ${err.message}`;
-        errorDiv.style.display = 'block';
+        displayMessage(`Request failed: ${err.message}`);
     }
 });
 
 // Helper function for proper UTF-8 base64 decoding
 function decodeBase64UTF8(str) {
-    // Convert base64 to binary string
-    const binaryString = atob(str);
-    // Convert binary string to byte array
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    // Decode UTF-8
-    return new TextDecoder('utf-8').decode(bytes);
+    const byteArray = Uint8Array.from(atob(str), c => c.charCodeAt(0));
+    return new TextDecoder('utf-8').decode(byteArray);
 }
