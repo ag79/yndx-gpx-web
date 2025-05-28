@@ -8,6 +8,20 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
     const errorDiv = document.getElementById('output');
 
+    // Validate URL format
+    try {
+        const urlObj = new URL(url);
+        if (!['http:', 'https:'].includes(urlObj.protocol)) {
+            throw new Error('Invalid protocol');
+        }
+    } catch (e) {
+        errorDiv.textContent = 'Проверьте, что введен корректный адрес карты, \
+        начинающийся с http:// или https://. Копируйте его из адресной строки браузера \
+        или пользуйтесь функцией "Поделиться".';
+        errorDiv.style.display = 'block';
+        return;
+    }
+
     if (!url.includes('yandex.ru/maps/')) {
         errorDiv.textContent = 'Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...';
         errorDiv.style.display = 'block';
