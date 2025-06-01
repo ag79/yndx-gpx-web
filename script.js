@@ -10,7 +10,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
     function displayMessage(message, isError = true) {
         errorDiv.className = isError ? 'error' : 'result';
-        errorDiv.textContent = message;
+        errorDiv.innerHTML = message;
         errorDiv.style.display = 'block';
         errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -86,7 +86,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
 
         } else {
             const errorText = await response.text();
-            displayMessage(`Error ${response.status}: ${errorText}`);
+            displayMessage(`Ошибка ${response.status}: ${errorText}`);
         }
     } catch (err) {
         displayMessage(`Request failed: ${err.message}`);
@@ -98,3 +98,38 @@ function decodeBase64UTF8(str) {
     const byteArray = Uint8Array.from(atob(str), c => c.charCodeAt(0));
     return new TextDecoder('utf-8').decode(byteArray);
 }
+
+// Paste handling
+document.getElementById('pasteButton').addEventListener('click', async function() {
+    const urlInput = document.getElementById('url');
+    
+    try {
+        // Check if Clipboard API is available
+        if (!navigator.clipboard || !navigator.clipboard.readText) {
+            throw new Error('Clipboard API not available');
+        }
+        
+        // Read clipboard text
+        const clipboardText = await navigator.clipboard.readText();
+        
+        // Validate and insert the text
+        if (clipboardText.trim()) {
+            urlInput.value = clipboardText;
+            
+            // Trigger input event for any validation listeners
+            const event = new Event('input', {
+                bubbles: true,
+                cancelable: true,
+            });
+            urlInput.dispatchEvent(event);
+            
+            // Focus the input for immediate editing if needed
+            urlInput.focus();
+        }
+    } catch (err) {
+        console.error('Paste failed:', err);
+        
+        // Fallback: Focus the input and show instructions
+        urlInput.focus();
+    }
+});

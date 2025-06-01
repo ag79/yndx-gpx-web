@@ -41,6 +41,7 @@ input[type="text"] {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    background-color : #f3f7c9; 
 }
 
 input[type="checkbox"] {
@@ -108,9 +109,59 @@ button:hover {
     list-style-type: disc; /* Optional: keeps bullet points */
 }
 
-input[type="text"], textarea {
-    background-color : #f3f7c9; 
-  }
+/* Paste Button */
+.input-with-paste {
+    display: flex;
+    width: 100%;
+}
+
+.input-with-paste input[type="text"] {
+    flex: 1; /* Takes remaining space */
+    min-width: 0; /* Prevents overflow */
+    padding: 8px;
+    background-color: #f3f7c9;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    border-right: none; /* Remove right border for seamless connection */
+}
+
+.paste-button {
+    width: auto; /* Let content determine width */
+    padding: 8px 12px;
+    background: #e9ecef;
+    border: 1px solid #ddd;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    color: #495057;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Focus states */
+.input-with-paste:focus-within input[type="text"] {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: none; /* Remove shadow to prevent visual issues */
+}
+
+.input-with-paste:focus-within .paste-button {
+    border-color: #66afe9;
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 500px) {
+    .paste-button {
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+    
+    .input-with-paste input[type="text"] {
+        padding-right: 80px;
+    }
+}
 
 /* Mobile responsiveness */
 @media (max-width: 500px) {
