@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPX Converter help</title>
+<link rel="stylesheet" href="style.css">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ym(101940930, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/101940930" style="position:absolute; left:-9999px;" alt=""/></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+<div class="container">
+<a href="/" class="back-arrow">&#129120;</a>
+<h1>Справка</h1>
+<p class="description"><a href="/">Конвертер</a> позволяет сохранить файл GPX из Яндекс.Карт и использовать в навигаторах,
+велокомпьютерах, спортивных часах и т.д.</p>
+
+<h3>Что можно выгрузить?</h3>
+<p class="description">Маршруты и точки, информация о которых встроена в страницу карты с указанием координат.</p>
+<ul class="description-list">
+    <label><li>Пользовательские карты, созданные в <a href="https://yandex.ru/map-constructor/">конструкторе карт</a> Яндекса</li></label>
+На пользовательских картах могут быть маршруты и путевые точки, которые вы сами добавляете.
+Этот вариант рекомендуется к использованию как максимально совместимый.
+
+    <label><li>Большинство<span style=color:red>*</span> проложенных Яндексом маршрутов навигации</li></label>
+Маршрут навигации вам прокладывают карты между точками откуда-куда
+(возможно, с промежуточными пунктами). В GPX можно сохранить как маршрут, так и эти точки.
+Из нескольких вариантов нужно выбрать/подсветить необходимый маршрут, он и будет выгружен.
+<p><span style=color:red>*</span> Длинные маршруты (~300-400 км и более) не выгружаются.
+Проблема решается только сокращением маршрута.</p>
+
+    <label><li>Созданные линейкой отрезки на обычной карте</li></label>
+Можно рисовать грубый маршрут линейкой для измерения расстояния. Некоторые пытались так делать,
+поэтому поддержка добавлена.
+</ul>
+
+<label>Что нельзя выгрузить?</label>
+<p class="description">
+Все, что не указано выше, объекты без координат: публичные коллекции/списки мест, очень длинные маршруты и прочее.
+Да, у Яндекса есть координаты всех объектов, но не всегда в доступном для выгрузки месте.
+</p>
+
+<h3>Что сохранить в файле GPX?</h3>
+<ul class="description-list">
+    <label><li>Маршруты</li></label>
+Подойдёт для навигации с устройствами Garmin, iGPSport и большинством других.
+GPX маршрут соответствует "дистанции" или "course" в Garmin.
+Если на карте несколько отрезков, каждый будет отдельным маршрутом в GPX.
+Некоторые устройства не умеют работать с несколькими
+маршрутами в одном GPX и сами объединяют их в один.
+
+    <label><li>Треки</li></label>
+Принципиальной разницы между маршрутами и треками нет. И то, и другое - последовательность точек.
+Выбирайте, что подходит для вашего устройства или софта.
+
+    <label><li>Один трек</li></label>
+Если на пользовательской карте маршрут разбит на несколько последовательных отрезков (день 1, день 2...),
+их можно в исходном порядке склеить как сегменты в один трек.
+Если отрезки не последовательные, результат может не оправдать ожиданий.
+
+    <label><li>Путевые точки (POI)</li></label>
+
+    <label><li>Высоты</li></label>
+Для аналитики и визуализации высотного профиля трека в стороннем софте можно
+добавить высоту в каждую точку. В навигации большинством устройств не используются.
+Высотные данные в трек добавляются со сглаживанием, в маршрут - без.
+Разрешение данных <a href="https://gis-lab.info/qa/srtm.html">SRTM</a> примерно 30х30 м,
+ошибка высоты в 90% случаев меньше 16 м.
+</ul>
+
+<p class="description">
+При успешной выгрузке выводится состав полученного GPX файла.
+</p>
+
+<h3>Полезное</h3>
+<p class="description">Вместо Яндекс.Карт - сервисы с готовой возможностью
+загрузки и выгрузки GPX, FIT и т.д.:</p>
+<ul class="description-list">
+  <li><a href="https://www.komoot.com">Komoot</a></li>
+  <li><a href="https://mapmagic.app">MapMagic</a></li>
+  <li><a href="https://www.ridewithgps.com">RideWithGPS</a></li>
+  <li><a href="https://explore.garmin.com">Garmin Explore</a></li>
+  <li><a href="https://www.plotaroute.com">PlotARoute</a></li>
+  <li><a href="https://www.outdooractive.com">OutdoorActive</a></li>
+  <li><a href="https://www.bikemap.net">Bikemap</a></li>
+</ul>
+<p class="description">Софт для редактирования GPX и конверсии в другие форматы:</p>
+<ul class="description-list">
+  <li><a href="https://sourceforge.net/projects/viking/">Viking</a> (редактор)</li>
+  <li><a href="https://sourceforge.net/projects/gpxeditor/">GPX Editor</a> (редактор)</li>
+  <li><a href="https://www.gpsbabel.org/">GPSBabel</a> (конвертер)</li>
+  <li><a href="https://www.gpxeditor.co.uk/">GPX Editor</a> (онлайн редактор)</li>
+  <li><a href="https://gpx.studio">gpx studio</a> (онлайн редактор)</li>
+  <li><a href="https://github.com/Maproom/qmapshack">QMapShack</a></li>
+  <li><a href="https://www.routeconverter.com/">RouteConverter</a></li>
+  <li><a href="https://github.com/tkrajina/gpxpy">gpxpy</a> (Python library)</li>
+</ul>
+</div>
+</body>
+</html>

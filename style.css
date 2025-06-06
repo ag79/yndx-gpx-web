@@ -10,6 +10,13 @@ body {
     background-color: #f4f4f4;
 }
 
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
 .container {
     max-width: 600px;
     margin: 20px auto;
@@ -32,7 +39,7 @@ h1 {
 label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-top: 5px;
     color: #555;
 }
 
@@ -67,8 +74,8 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.2s;
 }
-
 button:hover {
     background: #0056b3;
 }
@@ -98,6 +105,8 @@ button:hover {
     font-size: 0.9em;
     color: #777;
     margin-top: 5px;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
 }
 
 /* New class for <ul> */
@@ -161,6 +170,17 @@ button:hover {
     .input-with-paste input[type="text"] {
         padding-right: 80px;
     }
+}
+
+.back-arrow {
+    position: fixed;
+    text-decoration: none !important;
+    font-size: 2.0em;
+    color: #555;
+    z-index: 100;
+    background: rgba(255,255,255,0.7);
+    padding: 5px 10px;
+    border-radius: 50%;
 }
 
 /* Mobile responsiveness */

@@ -1,75 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yandex Route to GPX Converter</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-    ym(101940930, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-    });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/101940930" style="position:absolute; left:-9999px;" alt=""/></div></noscript>
-    <!-- /Yandex.Metrika counter -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yandex Route to GPX Converter</title>
+<link rel="stylesheet" href="style.css">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ym(101940930, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/101940930" style="position:absolute; left:-9999px;" alt=""/></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
-    <div class="container">
-        <h1>Яндекс карты ⇒ GPX</h1>
-        <form id="converterForm" action="https://functions.yandexcloud.net/d4ea9k4gss3q5ge37s23" method="GET">
-            <div class="form-group">
-                <label for="url">URL карты с маршрутом</label>
-                <div class="input-with-paste">
-                    <input type="text" id="url" name="url" placeholder="https://yandex.ru/maps/... адрес пользовательской карты" required>
-                    <button type="button" id="pasteButton" class="paste-button" aria-label="Вставить из буфера обмена">📋</button>
-                </div>
-                <p class="description">Поддерживаются:</p>
-                    <ul class="description-list">
-                        <li>пользовательские карты, созданные в <a href="https://yandex.ru/map-constructor/">конструкторе карт</a> Яндекса.</li>
-                        <li>большинство проложенных Яндексом маршрутов навигации (берётся только выбранный вариант маршрута)</li>
-                        <li>созданные линейкой отрезки на обычной карте.</li>
-                    </ul>
-            </div>
+<div class="container">
+<h1>Яндекс карты ⇒ GPX</h1>
+<form id="converterForm" action="https://functions.yandexcloud.net/d4ea9k4gss3q5ge37s23" method="GET">
+<div class="form-group">
+<label for="url">URL карты с маршрутом</label>
+<div class="input-with-paste">
+    <input type="text" id="url" name="url" placeholder="https://yandex.ru/maps/..." required>
+    <button type="button" id="pasteButton" class="paste-button" aria-label="Вставить из буфера обмена">📋</button>
+</div>
+<p class="description">Поддерживаются (подробнее в <a href="/help.html">справке</a>): </p>
+    <ul class="description-list">
+        <li>пользовательские карты, созданные в <a href="https://yandex.ru/map-constructor/">конструкторе карт</a> Яндекса.</li>
+        <li>большинство проложенных Яндексом маршрутов навигации короче 300 км (берётся выбранный вариант маршрута)</li>
+    </ul>
+</div>
 
-            <div class="form-group">
-                <label>Преобразовать линии в</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="lines" value="routes" checked> Маршруты</label>
-                    <label><input type="radio" name="lines" value="tracks"> Треки</label>
-                    <label><input type="radio" name="lines" value="track_segments"> Один трек</label>
-                </div>
-                <p class="description">
-                    <ul class="description-list">
-                        <li>Маршруты: каждый отрезок будет отдельным маршрутом ("дистанция" или "course" в Garmin). Подходит для навигации с устройствами Garmin и большинством других.</li>
-                        <li>Треки: каждый отрезок будет отдельным треком. Некоторые устройства поддерживают навигацию по треку.</li>
-                        <li>Один трек: отрезки в исходном порядке будут склеены как сегменты в один трек с потерей названий.</li>
-                    </ul>
-                </p>
-            </div>
+<div class="form-group">
+<label>Преобразовать линии в</label>
+<div class="radio-group">
+    <label><input type="radio" name="lines" value="routes" checked> Маршруты</label>
+    <label><input type="radio" name="lines" value="tracks"> Треки</label>
+    <label><input type="radio" name="lines" value="track_segments"> Один трек</label>
+</div>
+<p class="description">
+    <ul class="description-list">
+        <li>Маршруты: каждый отрезок будет отдельным маршрутом ("дистанция" или "course" в Garmin). Подходит для навигации с устройствами Garmin и большинством других.</li>
+        <li>Треки: каждый отрезок будет отдельным треком. Некоторые устройства поддерживают навигацию по треку.</li>
+        <li>Один трек: отрезки в исходном порядке будут склеены как сегменты в один трек.</li>
+    </ul>
+</p>
+</div>
 
-            <div class="form-group">
-                <label><input type="checkbox" id="placemarks" name="placemarks" checked> Включить путевые точки в GPX</label>
-            </div>
+<div class="form-group">
+<label><input type="checkbox" id="placemarks" name="placemarks" checked> Включить путевые точки в GPX</label>
+</div>
 
-            <div class="form-group">
-                <label><input type="checkbox" id="add_elevation" name="add_elevation"> Добавить высоты из SRTM</label>
-                <p class="description">Для аналитики, в навигации большинством устройств не используются.
-                    Увеличивает размер файла.</p>
-            </div>
+<div class="form-group">
+<label><input type="checkbox" id="add_elevation" name="add_elevation"> Добавить высоты из SRTM</label>
+<p class="description">Для аналитики, в навигации большинством устройств не используются.
+    Увеличивает размер файла.</p>
+</div>
 
-            <button type="submit">Конвертировать и скачать GPX</button>
-        </form>
-        <div id="output" class="error"></div>
-    </div>
-    <script src="script.js"></script>
+<button type="submit">Конвертировать и скачать GPX</button>
+</form>
+<div id="output" class="error"></div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
