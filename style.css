@@ -176,7 +176,7 @@ button:hover {
     position: fixed;
     text-decoration: none !important;
     font-size: 2.0em;
-    color: #555;
+    color: rgba(0,0,0,0.4);
     z-index: 100;
     background: rgba(255,255,255,0.7);
     padding: 5px 10px;
