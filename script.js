@@ -28,7 +28,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
         return;
     }
 
-    if (!url.toLowerCase().includes('yandex.ru/maps/')) {
+    if (!/yandex\.(ru|com)\/maps/i.test(url)) {
         displayMessage('Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...');
         return;
     }
