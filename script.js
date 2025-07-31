@@ -29,7 +29,7 @@ document.getElementById('converterForm').addEventListener('submit', async functi
     }
 
     if (!/yandex\.[a-z]{2,}\/maps/i.test(url)) {
-        displayMessage('Нужна ссылка на Яндекс Карты: https://yandex.ru/maps/...');
+        displayMessage('Нужна ссылка на Яндекс Карты: https://yandex.ru/maps...');
         return;
     }
 
