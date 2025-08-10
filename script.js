@@ -1,7 +1,8 @@
 document.getElementById('converterForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const url = document.getElementById('url').value;
+    const urlInput = document.getElementById('url');
+    let url = urlInput.value;
     const addElevation = document.getElementById('add_elevation').checked ? 1 : 0;
     const lines = document.querySelector('input[name="lines"]:checked').value;
     const placemarks = document.getElementById('placemarks').checked ? 1 : 0;
@@ -32,6 +33,15 @@ document.getElementById('converterForm').addEventListener('submit', async functi
         displayMessage('Нужна ссылка на Яндекс Карты: https://yandex.ru/maps...');
         return;
     }
+
+    // Fix user double paste
+    url = url.replace(/(https:\/\/.*?)(https:\/\/.*)/, '$1');
+
+    // Fix common user input error (where does this come from?)
+    url = url.replace("maps/rtext", "maps?rtext");
+
+    // Update url in input field
+    urlInput.value = url;
 
     const queryParams = new URLSearchParams({
         url: url,
