@@ -10,10 +10,22 @@ document.getElementById('converterForm').addEventListener('submit', async functi
     const errorDiv = document.getElementById('output');
 
     function displayMessage(message, isError = true) {
-        errorDiv.className = isError ? 'error' : 'result';
+        const goalName = isError ? 'error' : 'result';
+        errorDiv.className = goalName;
         errorDiv.innerHTML = message;
         errorDiv.style.display = 'block';
         errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Track with Yandex Metrica
+        if (typeof ym !== 'undefined') {
+            const params = {
+                message: message.substring(0, 100), // Limit message length
+                timestamp: new Date().toISOString()
+            };
+            ym(YM_COUNTER_ID, 'reachGoal', goalName, params);
+        } else {
+            console.warn('YM not loaded, not tracked:', goalName, message);
+        }
     }
 
     // Validate URL format
@@ -29,19 +41,36 @@ document.getElementById('converterForm').addEventListener('submit', async functi
         return;
     }
 
-    if (!/yandex\.[a-z]{2,}\/maps/i.test(url)) {
+    if (!/yandex\.[a-z]{2,}\//i.test(url)) {
         displayMessage('Нужна ссылка на Яндекс Карты: https://yandex.ru/maps...');
         return;
     }
 
-    // Fix user double paste
+    // Store original URL for comparison
+    const originalUrl = url;
+
+    // Fix user double paste (causes structural changes to state-view)
     url = url.replace(/(https:\/\/.*?)(https:\/\/.*)/, '$1');
 
     // Fix common user input error (where does this come from?)
     url = url.replace("maps/rtext", "maps?rtext");
 
-    // Update url in input field
-    urlInput.value = url;
+    // Check if URL was changed and track the fix
+    if (url !== originalUrl) {
+        // Update url in input field
+        urlInput.value = url;
+        
+        // Track URL_FIX goal with details about the fix
+        if (typeof ym !== 'undefined') {
+            const fixDetails = {
+                original_url: originalUrl.substring(0, 300), // Truncate if too long
+                timestamp: new Date().toISOString()
+            };
+            
+            ym(YM_COUNTER_ID, 'reachGoal', 'url_fixed', fixDetails);
+            console.log("Url fixed:", fixDetails);
+        }
+    }
 
     const queryParams = new URLSearchParams({
         url: url,
